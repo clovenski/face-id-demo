@@ -16,19 +16,19 @@ My environment used to develop this project:
 - OpenCV 3.2.0
 - NumPy 1.15.2
 
-Note: I believe the only dependencies here would be Python, dlib, OpenCV and NumPy
+I believe the only dependencies here would be Python, dlib, OpenCV and NumPy
 
 ## Usage
 
 First, make sure you have an `images` directory where you can store images to be used in the demo. You do not need this for the real time demo.
 
-You can download the appropriate models from dlib here:
--  http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2
+You can download the appropriate models needed from dlib here:
+- http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2
 - http://dlib.net/files/dlib_face_recognition_resnet_model_v1.dat.bz2
 
-Now, run the program with this command:
+The program assumes you have the above models in a directory named `models` and the images are in the `images` directory. Make adjustments in the code if necessary.
 
-`./main.py [path to shape predictor (first link)] [path to face recognizer (second link)] [path to images dir]`
+Now, run the program with: `./main.py`
 
 Throughout the entirety of the program, pressing the 'q' key will exit the program.
 
@@ -44,8 +44,8 @@ Once that is done, you will be returned to the start of the program where you ca
 
 Quitting the program with the 'q' key will also delete any of your photoshoot photos before exiting the program.
 
-For the real time demo:
-
-`./real_time_demo.py [path to shape predictor (first link)] [path to face recognizer (second link)]`
+For the real time demo: `./real_time_demo.py`
 
 And the controls are pretty similar to above; 'c' to calibrate and 'q' to quit. Additionally you can reset the calibration with the 'r' key.
+
+Also, you are able to provide an image to be used for calibration instead of from the webcam. Pass the path to the image as an argument to do so.

@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import sys
 import os
 import dlib
 import glob
@@ -8,18 +7,14 @@ import cv2 as cv
 import numpy as np
 from math import sqrt
 
-if len(sys.argv) != 4:
-    print(
-        "Call this program like this:\n"
-        "   ./main.py shape_predictor_5_face_landmarks.dat dlib_face_recognition_resnet_model_v1.dat images\n"
-        "You can download a trained facial shape predictor and recognition model from:\n"
-        "    http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2\n"
-        "    http://dlib.net/files/dlib_face_recognition_resnet_model_v1.dat.bz2")
-    exit()
+#   You can download a trained facial shape predictor and recognition model from:
+#       http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2
+#       http://dlib.net/files/dlib_face_recognition_resnet_model_v1.dat.bz2
 
-predictor_path = sys.argv[1]
-face_rec_model_path = sys.argv[2]
-faces_folder_path = sys.argv[3]
+# adjust these accordingly if needed
+predictor_path = './models/shape_predictor_5_face_landmarks.dat'
+face_rec_model_path = './models/dlib_face_recognition_resnet_model_v1.dat'
+faces_folder_path = './images/'
 
 detector = dlib.get_frontal_face_detector()
 sp = dlib.shape_predictor(predictor_path)

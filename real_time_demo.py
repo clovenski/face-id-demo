@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+from __future__ import print_function
+
 import dlib
 import sys
 import cv2 as cv
@@ -7,17 +9,13 @@ import numpy as np
 from math import sqrt
 import random
 
-if len(sys.argv) != 3:
-    print(
-        "Call this program like this:\n"
-        "   ./main.py shape_predictor_5_face_landmarks.dat dlib_face_recognition_resnet_model_v1.dat\n"
-        "You can download a trained facial shape predictor and recognition model from:\n"
-        "    http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2\n"
-        "    http://dlib.net/files/dlib_face_recognition_resnet_model_v1.dat.bz2")
-    exit()
+#   You can download a trained facial shape predictor and recognition model from:
+#       http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2
+#       http://dlib.net/files/dlib_face_recognition_resnet_model_v1.dat.bz2
 
-predictor_path = sys.argv[1]
-face_rec_model_path = sys.argv[2]
+# adjust these accordingly if needed
+predictor_path = './models/shape_predictor_5_face_landmarks.dat'
+face_rec_model_path = './models/dlib_face_recognition_resnet_model_v1.dat'
 
 detector = dlib.get_frontal_face_detector()
 sp = dlib.shape_predictor(predictor_path)
@@ -40,10 +38,10 @@ def drawBox(shape, pred):
         color = (0,255,0)
     box_pt1 = (shape.rect.tl_corner().x, shape.rect.tl_corner().y)
     box_pt2 = (shape.rect.br_corner().x, shape.rect.br_corner().y)
-    cv.rectangle(frame, box_pt1, box_pt2, color, 2)
+    cv.rectangle(frame, box_pt1, box_pt2, color, thickness=2)
     
     text_origin = (box_pt1[0], box_pt2[1] + 25)
-    cv.putText(frame, text, text_origin, cv.FONT_HERSHEY_DUPLEX, 1, color, 2)
+    cv.putText(frame, text, text_origin, cv.FONT_HERSHEY_DUPLEX, 1, color, thickness=2)
     
 def processFrame():
     global frame, ids
@@ -69,10 +67,10 @@ def processFrame():
         drawBox(box, preds[i])
     
     
-def calibrateImage(img):
+def calibrateImage(img, num_upsamples=0):
     global calibrated, ids, colors
     
-    dets = detector(img, 0)
+    dets = detector(img, num_upsamples)
     if len(dets) > 0:
         for i, det in enumerate(dets):
             shape = sp(img, det)
@@ -89,24 +87,43 @@ calibrated = False
 ids = {}
 colors = []
 
+if len(sys.argv) == 2:
+    print('Calibrating given image . . . ', end='')
+    try:
+        init_img = dlib.load_rgb_image(sys.argv[1])
+        frame = cv.cvtColor(init_img, cv.COLOR_RGB2BGR)
+        calibrateImage(frame, num_upsamples=1)
+        processFrame()
+        if calibrated:
+            print('done')
+            cv.imshow('Reference', frame)
+        else:
+            print('failed')
+    except:
+        print('failed')
+
 while cap.isOpened():
     ret, frame = cap.read()
     if ret == True:
         if not calibrated:
-            cv.imshow('Press C to calibrate everyone\'s faces', frame)
+            cv.imshow('face-id-demo', frame)
             key = cv.waitKey(1) & 0xFF
             if key == ord('c'):
+                print('Calibrating image . . . ', end='')
                 calibrateImage(frame)
                 if calibrated:
-                    cv.destroyWindow('Press C to calibrate everyone\'s faces')
+                    print('done')
+                    print('Faces found: {}'.format(len(ids)))
+                else:
+                    print('failed')
             elif key == ord('q'):
                 break
         else:
             processFrame()
-            cv.imshow('Running Demo', frame)
+            cv.imshow('face-id-demo', frame)
             key = cv.waitKey(1) & 0xFF
             if key == ord('r'):
-                cv.destroyWindow('Running Demo')
+                print('Resetting calibration')
                 calibrated = False
                 ids.clear()
                 colors.clear()
