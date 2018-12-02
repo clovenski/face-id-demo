@@ -54,7 +54,7 @@ def processImages():
             shapes.append(shape)
 
             face_id2 = np.array(facerec.compute_face_descriptor(img, shape))
-            if euclDistance(np.array(face_id), face_id2) < 0.47:
+            if euclDistance(np.array(face_id), face_id2) < 0.55: # 0.47
                 matches.append(True)
             else:
                 matches.append(False)
@@ -82,13 +82,13 @@ def computeFaceId(img):
         face_id = None
     else:
         shape = sp(img, dets[0])
-        face_id = facerec.compute_face_descriptor(img, shape, 50)
+        face_id = facerec.compute_face_descriptor(img, shape, 100) # 50
 
 def cleanUpImgDir():
     for f in glob.glob(os.path.join(faces_folder_path, 'photo_of_you_*')):
         os.remove(f)
 
-cap = cv.VideoCapture(1)
+cap = cv.VideoCapture(0)
 cap.set(cv.CAP_PROP_FPS, 60.0)
 
 calibrated = False
