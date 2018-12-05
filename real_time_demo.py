@@ -43,10 +43,10 @@ def drawBox(shape, pred):
     text_origin = (box_pt1[0], box_pt2[1] + 25)
     cv.putText(frame, text, text_origin, cv.FONT_HERSHEY_DUPLEX, 1, color, thickness=2)
     
-def processFrame():
+def processFrame(num_upsamples=0):
     global frame, ids
     
-    dets = detector(frame, 0)
+    dets = detector(frame, num_upsamples)
     shapes = []
     preds = []
     for d in dets:
@@ -54,14 +54,15 @@ def processFrame():
         shapes.append(shape)
         
         target_face = np.array(facerec.compute_face_descriptor(frame, shape))
-        match = False
+        potential_ids = {}
         for i, id in ids.items():
-            if euclDistance(np.array(id), target_face) < 0.6:
-                preds.append(i)
-                match = True
-                break
-        if not match:
+            dist = euclDistance(np.array(id), target_face)
+            if  dist < 0.6:
+                potential_ids[i] = dist
+        if len(potential_ids) == 0:
             preds.append(0)
+        else:
+            preds.append(min(potential_ids, key=potential_ids.get))
 
     for i, box in enumerate(shapes):
         drawBox(box, preds[i])
@@ -91,7 +92,7 @@ def process_args():
         init_img = dlib.load_rgb_image(sys.argv[1])
         frame = cv.cvtColor(init_img, cv.COLOR_RGB2BGR)
         calibrateImage(frame, num_upsamples=1)
-        processFrame()
+        processFrame(num_upsamples=1)
         if calibrated:
             print('done')
             cv.imshow('Reference', frame)
@@ -107,7 +108,7 @@ def process_args():
         try:
             init_img = dlib.load_rgb_image(img_fn)
             frame = cv.cvtColor(init_img, cv.COLOR_RGB2BGR)
-            processFrame()
+            processFrame(num_upsamples=1)
             cv.imshow(img_fn, frame)
             windows_to_remove.append(img_fn)
         except:
