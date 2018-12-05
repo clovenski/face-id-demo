@@ -79,15 +79,13 @@ def calibrateImage(img, num_upsamples=0):
             rand_color = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
             colors.append(rand_color)
         calibrated = True
-    
-cap = cv.VideoCapture(0)
-cap.set(cv.CAP_PROP_FPS, 60.0)
 
-calibrated = False
-ids = {}
-colors = []
 
-if len(sys.argv) == 2:
+def process_args():
+    global frame
+
+    windows_to_remove = []
+
     print('Calibrating given image . . . ', end='')
     try:
         init_img = dlib.load_rgb_image(sys.argv[1])
@@ -97,10 +95,36 @@ if len(sys.argv) == 2:
         if calibrated:
             print('done')
             cv.imshow('Reference', frame)
+            windows_to_remove.append('Reference')
         else:
             print('failed')
+            return None
     except:
         print('failed')
+        return None
+
+    for img_fn in sys.argv[2:]:
+        try:
+            init_img = dlib.load_rgb_image(img_fn)
+            frame = cv.cvtColor(init_img, cv.COLOR_RGB2BGR)
+            processFrame()
+            cv.imshow(img_fn, frame)
+            windows_to_remove.append(img_fn)
+        except:
+            print('Failed loading image: {}'.format(img_fn))
+
+    return windows_to_remove
+    
+
+cap = cv.VideoCapture(0)
+cap.set(cv.CAP_PROP_FPS, 60.0)
+
+calibrated = False
+ids = {}
+colors = []
+
+if len(sys.argv) >= 2:
+    window_names = process_args()
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -123,7 +147,13 @@ while cap.isOpened():
             cv.imshow('face-id-demo', frame)
             key = cv.waitKey(1) & 0xFF
             if key == ord('r'):
-                print('Resetting calibration')
+                print('Calibration has been reset')
+                if window_names != None:
+                    for name in window_names:
+                        cv.destroyWindow(name)
+                    window_names = None
+                else:
+                    cv.destroyWindow('Reference')
                 calibrated = False
                 ids.clear()
                 colors.clear()

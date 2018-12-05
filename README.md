@@ -49,3 +49,5 @@ For the real time demo: `./real_time_demo.py`
 And the controls are pretty similar to above; 'c' to calibrate and 'q' to quit. Additionally you can reset the calibration with the 'r' key.
 
 Also, you are able to provide an image to be used for calibration instead of from the webcam. Pass the path to the image as an argument to do so.
+
+Additonally, any more images you would like to process can be passed after the first argument.
