@@ -56,6 +56,12 @@ Additonally, any more images you would like to process can be passed after the f
 
 ## Examples
 
-From left to right: first window shows the face that was calibrated (the reference), second window shows the feed from the webcam, and the third window is an image from disk.
+From left to right: first window shows the image that was used for calibration (the reference), second window shows the feed from the webcam, and the third window is an image from disk.
 
-![Alt Text](examples/ex_1.PNG)
+![Alt text](examples/ex_1.png)
+
+![Alt text](examples/ex_2.png)
+
+Here are some examples with a false positive
+
+![Alt text](examples/ex_3.png)
