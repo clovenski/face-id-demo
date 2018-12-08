@@ -38,13 +38,15 @@ When you are ready to take a picture of yourself, press 'c' on your keyboard to 
 
 Then, once it is done you are allowed to take additional photos of yourself to be included in the demo. Once you are satisfied with your photoshoot, press the 'p' key to start the demo.
 
-The program should then iterate through all of your .jpg images in the `images` directory, detecting faces and making a prediction to whether that face is yours or not. Green bounding boxes are a match and red bounding boxes are not a match.
+The program should then iterate through all of your .jpg images in the `images` directory, detecting faces and making a prediction to whether that face is yours or not. Green bounding boxes are a match and red bounding boxes are not a match. Press the 'n' key to move on to the next image.
 
 Once that is done, you will be returned to the start of the program where you can then use another face to be used for this demo. Note that at this point your photoshoot photos are deleted.
 
 Quitting the program with the 'q' key will also delete any of your photoshoot photos before exiting the program.
 
 For the real time demo: `./real_time_demo.py`
+
+When calibrating an image with faces in it, each person is associated with a random color to help distinguish between identifications during the demo. Any unknown faces will be shown in bright green.
 
 And the controls are pretty similar to above; 'c' to calibrate and 'q' to quit. Additionally you can reset the calibration with the 'r' key.
 
