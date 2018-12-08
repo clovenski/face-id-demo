@@ -53,3 +53,9 @@ And the controls are pretty similar to above; 'c' to calibrate and 'q' to quit. 
 Also, you are able to provide an image to be used for calibration instead of from the webcam. Pass the path to the image as an argument to do so.
 
 Additonally, any more images you would like to process can be passed after the first argument.
+
+## Examples
+
+From left to right: first window shows the face that was calibrated (the reference), second window shows the feed from the webcam, and the third window is an image from disk.
+
+![Alt Text](examples/ex_1.PNG)
