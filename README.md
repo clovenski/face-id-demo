@@ -58,10 +58,10 @@ Additonally, any more images you would like to process can be passed after the f
 
 From left to right: first window shows the image that was used for calibration (the reference), second window shows the feed from the webcam, and the third window is an image from disk.
 
-![Alt text](examples/ex_1.png)
+![Alt text](examples/ex_1.jpg)
 
-![Alt text](examples/ex_2.png)
+![Alt text](examples/ex_2.jpg)
 
 Here are some examples with a false positive
 
-![Alt text](examples/ex_3.png)
+![Alt text](examples/ex_3.jpg)
