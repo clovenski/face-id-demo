@@ -77,7 +77,9 @@ def calibrateImage(img, num_upsamples=0):
             shape = sp(img, det)
             face_id = facerec.compute_face_descriptor(img, shape, 100)
             ids[i+1] = face_id
-            rand_color = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
+            rand_color = (random.randint(0,255), random.randint(0,254), random.randint(0,255))
+            while rand_color in colors:
+                rand_color = (random.randint(0,255), random.randint(0,254), random.randint(0,255))
             colors.append(rand_color)
         calibrated = True
 
@@ -126,6 +128,8 @@ colors = []
 
 if len(sys.argv) >= 2:
     window_names = process_args()
+else:
+    window_names = None
 
 while cap.isOpened():
     ret, frame = cap.read()
