@@ -62,6 +62,14 @@ From left to right: first window shows the image that was used for calibration (
 
 ![Alt text](examples/ex_2.jpg)
 
-Here are some examples with a false positive
+Here are some examples with false positives
 
 ![Alt text](examples/ex_3.jpg)
+
+![Alt text](examples/ex_4.jpg)
+
+![Alt text](examples/ex_6.jpg)
+
+Here is an example where dlib's face detector could not detect the leftmost three faces, along with a misidentification
+
+![Alt text](examples/ex_5.jpg)
