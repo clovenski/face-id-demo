@@ -38,7 +38,7 @@ When you are ready to take a picture of yourself, press 'c' on your keyboard to 
 
 Then, once it is done you are allowed to take additional photos of yourself to be included in the demo. Once you are satisfied with your photoshoot, press the 'p' key to start the demo.
 
-The program should then iterate through all of your .jpg images in the `images` directory, detecting faces and making a prediction to whether that face is yours or not. Green bounding boxes are a match and red bounding boxes are not a match.
+The program should then iterate through all of your .jpg images in the `images` directory, detecting faces and making a prediction to whether that face is yours or not. Green bounding boxes are a match and red bounding boxes are not a match. Press the 'n' key to move on to the next image.
 
 Once that is done, you will be returned to the start of the program where you can then use another face to be used for this demo. Note that at this point your photoshoot photos are deleted.
 
@@ -48,6 +48,8 @@ Quitting the program with the 'q' key will also delete any of your photoshoot ph
 
 For the real time demo: `./real_time_demo.py`
 
+When calibrating an image with faces in it, each person is associated with a random color to help distinguish between identifications during the demo. Any unknown faces will be shown in bright green.
+
 And the controls are pretty similar to above; 'c' to calibrate and 'q' to quit. Additionally you can reset the calibration with the 'r' key.
 
 Also, you are able to provide an image to be used for calibration instead of from the webcam. Pass the path to the image as an argument to do so.
@@ -55,3 +57,22 @@ Also, you are able to provide an image to be used for calibration instead of fro
 Additonally, any more images you would like to process can be passed after the first argument.
 
 For example: `./real_time_demo.py images/reference.jpg images/test_img1.jpg images/test_img2.jpg`
+## Examples
+
+From left to right: first window shows the image that was used for calibration (the reference), second window shows the feed from the webcam, and the third window is an image from disk.
+
+![Alt text](examples/ex_1.jpg)
+
+![Alt text](examples/ex_2.jpg)
+
+Here are some examples with false positives
+
+![Alt text](examples/ex_3.jpg)
+
+![Alt text](examples/ex_4.jpg)
+
+![Alt text](examples/ex_6.jpg)
+
+Here is an example where dlib's face detector could not detect the leftmost three faces, along with a misidentification
+
+![Alt text](examples/ex_5.jpg)
