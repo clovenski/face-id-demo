@@ -26,7 +26,7 @@ You can download the appropriate models needed from dlib here:
 - http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2
 - http://dlib.net/files/dlib_face_recognition_resnet_model_v1.dat.bz2
 
-The program assumes you have the above models in a directory named `models` and the images are in the `images` directory. Make adjustments in the code if necessary.
+The program assumes you have the above models in a directory named `models` and the images are in the `images` directory. Make adjustments in the code if necessary. Again, this is not necessary for the real time demo.
 
 Now, run the program with: `./main.py`
 
@@ -44,6 +44,8 @@ Once that is done, you will be returned to the start of the program where you ca
 
 Quitting the program with the 'q' key will also delete any of your photoshoot photos before exiting the program.
 
+---
+
 For the real time demo: `./real_time_demo.py`
 
 And the controls are pretty similar to above; 'c' to calibrate and 'q' to quit. Additionally you can reset the calibration with the 'r' key.
@@ -51,3 +53,5 @@ And the controls are pretty similar to above; 'c' to calibrate and 'q' to quit. 
 Also, you are able to provide an image to be used for calibration instead of from the webcam. Pass the path to the image as an argument to do so.
 
 Additonally, any more images you would like to process can be passed after the first argument.
+
+For example: `./real_time_demo.py images/reference.jpg images/test_img1.jpg images/test_img2.jpg`
